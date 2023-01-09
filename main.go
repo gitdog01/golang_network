@@ -29,5 +29,12 @@ func main(){
 			fmt.Println(err)
 		}
 		return
+	} else {
+		// 클라이언트 모드
+		err := monolib.Dial()
+		if err != nil {
+			fmt.Println(err)
+		}
+		return
 	}
 }
