@@ -3,10 +3,10 @@ package monolib
 
 import (
 	"net"
-	"testing"
+	"fmt"
 )
 
-func TestListen(t *testing.T) {
+func TestListen() error {
 	// listener 와 err 를 리턴 받습니다.
 	// listener 는 net.Listener 인터페이스를 구현한 객체입니다.
 	// err 는 error 인터페이스를 구현한 객체입니다.
@@ -24,7 +24,7 @@ func TestListen(t *testing.T) {
 	// 에러가 발생하면 테스트를 실패합니다.
 	// 에러가 발생하지 않으면 테스트를 성공합니다.
 	if err != nil {
-		t.Fatal(err)
+		fmt.Println("Error: ", err)
 	}
 
 	// defer 는 함수가 종료되기 직전에 실행됩니다.
@@ -40,5 +40,26 @@ func TestListen(t *testing.T) {
 
 	// listener.Addr()의 반환값은 
 	// %q 는 쌍따옴표로 묶인 문자열을 표시합니다.
-	t.Logf("bound to %q", listener.Addr())
+	fmt.Println("bound to", listener.Addr())
+
+	// for 루프는 무한 루프입니다.
+
+	// Accept 메서드는 리스너가 수신 대기 중인 연결을 반환합니다.
+	// Accept 메서드는 블로킹 메서드입니다.
+	// Accept 메서드는 블로킹 메서드이기 때문에
+	// 리스너가 수신 대기 중인 연결이 없으면 무한정 블로킹됩니다.
+	for {
+		conn, err := listener.Accept()
+		if err != nil {
+			return err
+		}
+
+		// go 는 고루틴을 생성합니다.
+		// 고루틴은 경량스레드 입니다.
+		go func (c net.Conn) {
+			defer c.Close()
+			_, _ = c.Write([]byte("Hello World"))
+
+		}(conn)
+	}
 }
