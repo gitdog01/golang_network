@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func TestListen() error {
+func RunListen() error {
 	// listener 와 err 를 리턴 받습니다.
 	// listener 는 net.Listener 인터페이스를 구현한 객체입니다.
 	// err 는 error 인터페이스를 구현한 객체입니다.
