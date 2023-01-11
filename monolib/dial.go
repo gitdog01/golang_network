@@ -63,6 +63,14 @@ func Dial() error {
 
 	}()
 
+	// dial은 name network에 대한 연결을 시도합니다.
+	// network는 "tcp", "tcp4", "tcp6", "unix" or "unixpacket" 중 하나입니다.
+	// name은 network에 따라 다릅니다.
+	// 예를 들어, "tcp" network는 "host:port" 형식의 name을 받습니다.
+	// "unix" network는 파일 시스템 경로를 받습니다.
+	// "unixpacket" network는 "host:port" 형식의 name을 받습니다.
+	// "host"는 IP 주소, IPv6 주소, 또는 호스트 이름이 될 수 있습니다.
+	// "port"는 포트 번호 또는 서비스 이름이 될 수 있습니다.
 	conn, err := net.Dial("tcp", listener.Addr().String())
 	if err != nil {
 		fmt.Println("dial error", err)
